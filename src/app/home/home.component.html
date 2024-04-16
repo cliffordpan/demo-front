@@ -1,0 +1,52 @@
+<article>
+  <div>
+    <h1 tabindex="-1">Demo Project</h1>
+  </div>
+  <div>
+    <h3 tabindex="-1">Database - H2 database</h3>
+  </div>
+  <p>For demo purpose, this one use H2 memory database with preset data.</p>
+  <div>
+    <h3 tabindex="-1">Controller - Only implemented limit features</h3>
+  </div>
+  <ul>
+    <li>AuthController for access and refresh tokens generation</li>
+    <li>ProductController for product CRUD operations</li>
+    <li>
+      TicketController for tickets creation, retrieving ,assignment and closing
+    </li>
+    <li>HealthController for system heartbeat, and db reset</li>
+  </ul>
+  <div>
+    <h3 tabindex="-1">Security</h3>
+  </div>
+  <ul>
+    <li>Roles - ADMIN, SUPPORT, CLIENT</li>
+    <li>For products reading is opened for all(include anonymous)</li>
+    <li>
+      Tickets will be filtered by security principal
+      <ul>
+        <li>ADMIN can access and operate all tickets</li>
+        <li>
+          SUPPORT can only access and operate assigned tickets to specified
+          account
+        </li>
+        <li>CLIENT can only access created tickets</li>
+      </ul>
+    </li>
+    <li>Self api call is for getting logged profile</li>
+  </ul>
+
+  <div>
+    <h3 tabindex="-1">Urls</h3>
+  </div>
+  <ul>
+    <li>"/home" -- home page(this one)</li>
+    <li>"/products" -- list all products</li>
+    <li>"/products/:id" -- show product details</li>
+    <li>
+      "/profile" -- update password name, etc. Required login(directly input
+      this address in address bar will automatically popup login dialog)
+    </li>
+  </ul>
+</article>

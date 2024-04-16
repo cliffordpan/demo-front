@@ -1,0 +1,38 @@
+<mat-dialog-content [formGroup]="form">
+  <div style="margin-bottom: 0.5rem">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>EMail</mat-label>
+      <input matInput formControlName="email" #email />
+      @if(form.controls['email'].hasError('email')) {
+      <mat-error>Malform E-Mail address</mat-error>
+      } @else if(form.controls['email'].hasError('required')) {
+      <mat-error>E-Mail address is mandatory</mat-error>
+      }
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password" />
+      @if(form.controls['password'].hasError('required')) {
+      <mat-error>Password is mandatory</mat-error>
+      }
+    </mat-form-field>
+  </div>
+  @if(error|async; as e) {
+  <div class="text-warn">
+    <small>{{ e }}</small>
+  </div>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button
+    type="button"
+    [disabled]="form.invalid || !form.touched"
+    mat-button
+    color="primary"
+    (click)="login()"
+  >
+    Login
+  </button>
+</mat-dialog-actions>

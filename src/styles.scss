@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+@use "sass:map";
+@use "@angular/material" as mat;
+@use "styles/variables/" as vars;
+@use "styles/components/" as components;
+@include mat.core();
+
+@include mat.typography-hierarchy(vars.$my-typography);
+@include mat.all-component-themes(vars.$light-theme);
+@include vars.font-color(vars.$light-theme);
+
+.t2nd {
+	@include mat.all-component-colors(vars.$dark-theme);
+	@include vars.font-color(vars.$dark-theme);
+}
+
+mat-icon.larger-mat-icon {
+	width: 3rem !important;
+	height: 3rem !important;
+	font-size: 3rem !important;
+}
+
+html,
+body {
+	@extend .w-100;
+	@extend .h-100;
+}
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.child-in-center {
+	@extend .flex;
+	justify-content: center;
+	align-items: center;
+}

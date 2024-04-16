@@ -1,0 +1,19 @@
+@use "@angular/material" as mat;
+
+.input-form {
+	display: flex;
+	flex-direction: column;
+	& > :not(:first-child) {
+		margin-top: 0.5rem;
+	}
+
+	& > div,
+	& > p,
+	& > span {
+		display: flex;
+		align-items: center;
+		& > :not(:first-child) {
+			margin-left: 0.5rem;
+		}
+	}
+}

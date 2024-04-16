@@ -1,0 +1,152 @@
+@use "sass:list";
+@use "sass:meta";
+@use "sass:string";
+@use "@angular/material" as mat;
+$light-theme-primary: mat.define-palette(mat.$light-blue-palette, 700, 900, 600);
+$light-theme-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
+$light-theme-warn: mat.define-palette(mat.$red-palette);
+
+$light-theme: mat.define-light-theme(
+	(
+		color: (
+			primary: $light-theme-primary,
+			accent: $light-theme-accent,
+			warn: $light-theme-warn
+		),
+		typography: mat.define-typography-config()
+	)
+);
+$my-typography: mat.define-typography-config();
+
+$dark-theme-primary: mat.define-palette(mat.$blue-gray-palette, 900);
+$dark-theme-accent: mat.define-palette(mat.$purple-palette, 500, 400, 600);
+$dark-theme-warn: mat.define-palette(mat.$red-palette);
+
+$dark-theme: mat.define-dark-theme(
+	(
+		color: (
+			primary: $dark-theme-primary,
+			accent: $dark-theme-accent,
+			warn: $dark-theme-warn
+		),
+		typography: mat.define-typography-config()
+	)
+);
+
+@for $i from 1 through 20 {
+	.w-#{$i*5} {
+		width: $i * 5%;
+	}
+	.h-#{$i*5} {
+		height: $i * 5%;
+	}
+}
+
+.flex {
+	display: flex;
+}
+
+$flex-directions: row, row-reverse, column, column-reverse;
+
+@each $dir in $flex-directions {
+	.flex-#{$dir} {
+		flex-direction: $dir;
+	}
+}
+
+// $mp-directions: ;
+@each $c in m, p {
+	@each $dir in t, b, l, r, x, y {
+		@each $x in 1, 2, 3, 4, 5, 6, auto {
+			.#{$c}#{$dir}-#{$x} {
+				$selector: margin;
+				@if ($c == p) {
+					$selector: padding;
+				}
+				@if ($x != auto) {
+					@if ($dir == t) {
+						#{$selector}-top: $x * 0.5rem;
+					} @else if ($dir == b) {
+						#{$selector}-bottom: $x * 0.5rem;
+					} @else if ($dir == l) {
+						#{$selector}-left: $x * 0.5rem;
+					} @else if ($dir == r) {
+						#{$selector}-right: $x * 0.5rem;
+					} @else if ($dir == x) {
+						#{$selector}-left: $x * 0.5rem;
+						#{$selector}-right: $x * 0.5rem;
+					} @else if ($dir == y) {
+						#{$selector}-right: $x * 0.5rem;
+						#{$selector}-bottom: $x * 0.5rem;
+					}
+				} @else {
+					@if ($dir == t) {
+						#{$selector}-top: $x;
+					} @else if ($dir == b) {
+						#{$selector}-bottom: $x;
+					} @else if ($dir == l) {
+						#{$selector}-left: $x;
+					} @else if ($dir == r) {
+						#{$selector}-right: $x;
+					} @else if ($dir == x) {
+						#{$selector}-left: $x;
+						#{$selector}-right: $x;
+					} @else if ($dir == y) {
+						#{$selector}-right: $x;
+						#{$selector}-bottom: $x;
+					}
+				}
+			}
+		}
+	}
+}
+
+@each $c in m, p {
+	@each $x in 1, 2, 3, 4, 5, 6, auto {
+		.#{$c}-#{$x} {
+			$selector: margin;
+			@if ($c == p) {
+				$selector: padding;
+			}
+			@if ($x != auto) {
+				#{$selector}: $x * 0.5rem;
+			} @else {
+				#{$selector}: auto;
+			}
+		}
+	}
+}
+
+@for $i from 1 through 12 {
+	.gap-#{$i} {
+		gap: $i * 0.5rem;
+	}
+}
+
+@mixin font-color($theme) {
+	@each $des in primary, accent, warn {
+		@each $text in default, lighter, darker, text, default-contrast, lighter-contrast, darker-contrast {
+			.text-#{$des}-#{$text} {
+				color: mat.get-theme-color($theme, $des, $text);
+			}
+		}
+
+		@each $hue in 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A700 {
+			.text-#{$des}-#{$hue} {
+				color: mat.get-theme-color($theme, $des, #{$hue});
+			}
+
+			.text-#{$des}-#{$hue}-contrast {
+				color: mat.get-theme-color($theme, $des, #{$hue}-contrast);
+			}
+		}
+
+		.text-#{$des} {
+			color: mat.get-theme-color($theme, $des, "default");
+		}
+
+		.text-#{$des}-contrast {
+			color: mat.get-theme-color($theme, $des, "default-contrast");
+		}
+	}
+}

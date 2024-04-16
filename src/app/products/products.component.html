@@ -1,0 +1,27 @@
+<div class="search">
+  <mat-form-field appearance="outline" floatLabel="always">
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="search(getValue($event))" />
+  </mat-form-field>
+</div>
+<div class="list flex flex-column">
+  @for(product of products; track product) {
+  <div
+    class="image-list-item flex gap-1 w-100"
+    [routerLink]="['/products', product.id]"
+  >
+    <span class="avatar child-in-center">
+      <img src="https://placehold.co/75x100"
+    /></span>
+    <div class="center flex flex-column">
+      <div class="title mat-subtitle-2">
+        <b>{{ product.name }}</b>
+      </div>
+      <small class="note description">{{ product.description }}</small>
+    </div>
+    <span class="meta child-in-center">{{
+      product.price | currency : "CAD"
+    }}</span>
+  </div>
+  }
+</div>

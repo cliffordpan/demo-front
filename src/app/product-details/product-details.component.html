@@ -1,0 +1,42 @@
+<div class="action-header">
+  <a
+    mat-icon-button
+    routerLink="/products"
+    matTooltip="Back to list"
+    color="primary"
+    ><mat-icon>arrow_back_ios</mat-icon></a
+  >
+</div>
+<div class="main">
+  @if(product|async; as p) {
+  <div class="title">
+    <span class="mat-headline-4">{{ p.name }}</span
+    ><span class="mat-headline-5" style="margin-left: auto">{{
+      p.unitPrice
+    }}</span>
+  </div>
+  <div class="image">
+    <img src="https://placehold.co/300x400" />
+  </div>
+  <div class="description mat-subtitle-2">
+    <div>{{ p.description }}</div>
+    <hr />
+    <p class="mat-subtitle-1">Platform: {{ p.platform }}</p>
+    <p class="mat-subtitle-1">Catergory: {{ p.category }}</p>
+  </div>
+  <div class="actions">
+    @if(self|async; as a) { @if(a.type != 'EMPLOYEE') {
+
+    <button
+      mat-icon-button
+      color="primary"
+      matTooltip="Add to shopping cart"
+      (click)="addCart(p.id)"
+    >
+      <mat-icon>add_shopping_cart</mat-icon>
+    </button>
+
+    } }
+  </div>
+  }
+</div>

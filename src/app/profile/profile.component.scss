@@ -1,0 +1,9 @@
+:host {
+	& > :not(:first-child) {
+		margin-top: 0.5rem;
+	}
+}
+
+.mat-mdc-mini-fab:not(.mdc-fab--extended) {
+	border-radius: 0.5rem;
+}

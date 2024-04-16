@@ -1,0 +1,58 @@
+@use "@angular/material" as mat;
+
+:host {
+	height: 100%;
+	width: 100%;
+	display: grid;
+	grid-template-rows: 4rem auto;
+	gap: 0.5rem;
+	& > * {
+		padding: 0 1rem;
+	}
+}
+
+.action-header {
+	grid-row: 1;
+}
+
+.main {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	grid-row: 2;
+	display: grid;
+	gap: 0.5rem;
+	grid-template-columns: 18.75rem 1fr;
+	grid-template-rows: 4rem 20.32rem 4rem 1fr;
+
+	& > .title {
+		padding: 0;
+		margin: 0;
+		justify-content: center;
+		display: inline-flex;
+		grid-row: 1;
+		grid-column: 1 / span 2;
+	}
+	& > .image {
+		grid-row: 2 / span 2;
+		grid-column: 1;
+	}
+
+	& > .description {
+		grid-row: 2 / span 1;
+		grid-column: 2;
+		color: gray;
+		text-align: justify;
+	}
+	& > .actions {
+		grid-row: 3;
+		grid-column: 2;
+		text-align: right;
+	}
+}
+.button-container {
+	display: flex;
+	justify-content: center;
+	width: 7.5rem;
+}
