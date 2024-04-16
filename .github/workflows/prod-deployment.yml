@@ -32,4 +32,4 @@ jobs:
 
       - name: Deploy
         if: success()
-        run: aws s3 sync ./dist/game-store-app s3://demo-front-prod
+        run: aws s3 sync ./dist/game-store-app/browser s3://demo-front-prod
