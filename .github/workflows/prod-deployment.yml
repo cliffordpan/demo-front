@@ -1,0 +1,35 @@
+name: deploy-master-to-s3
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: "us-west-2"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Build
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build:prod
+
+      - name: Deploy
+        if: success()
+        run: aws s3 sync ./dist/game-store-app s3://demo-front-prod
