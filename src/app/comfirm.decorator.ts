@@ -4,14 +4,15 @@ import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.componen
 import { formatString } from "./utils";
 
 
-
 export const Confirm: (config: string) => MethodDecorator = (config: string) => {
 	return (target: any, name: any, descriptor: PropertyDescriptor) => {
 		const originalMethod = descriptor.value;
 		descriptor.value = function (...args: any[]) {
 			const dialog = DecoratorService.inject(MatDialog);
+			console.log(target)
 			const _this = this;
 			const message = formatString(config, args);
+			// const dialog: MatDialog = _inject(MatDialog);
 			dialog.open<ConfirmDialogComponent, string, boolean>(ConfirmDialogComponent, {
 				data: message
 			}).afterClosed().subscribe(rs => {

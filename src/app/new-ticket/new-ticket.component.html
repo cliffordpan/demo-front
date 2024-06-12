@@ -1,0 +1,51 @@
+@if(!!ticket) {
+<span mat-dialog-title class="mat-headline-5">Ticket #{{ ticket.id }}</span>
+} @else {
+<span mat-dialog-title class="mat-headline-5">New ticket</span>
+}
+<mat-dialog-content>
+  <table cellspacing="0" [formGroup]="form">
+    <col />
+    <col />
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="p-1">
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          color="primary"
+        >
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td class="p-1">
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          color="primary"
+          class="w-100"
+        >
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    color="primary"
+    [disabled]="form.invalid"
+    (click)="saveTicket()"
+  >
+    Submit
+  </button>
+</mat-dialog-actions>

@@ -24,19 +24,6 @@
     <p class="mat-subtitle-1">Platform: {{ p.platform }}</p>
     <p class="mat-subtitle-1">Catergory: {{ p.category }}</p>
   </div>
-  <div class="actions">
-    @if(self|async; as a) { @if(a.type != 'EMPLOYEE') {
 
-    <button
-      mat-icon-button
-      color="primary"
-      matTooltip="Add to shopping cart"
-      (click)="addCart(p.id)"
-    >
-      <mat-icon>add_shopping_cart</mat-icon>
-    </button>
-
-    } }
-  </div>
   }
 </div>

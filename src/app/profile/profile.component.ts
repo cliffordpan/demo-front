@@ -31,8 +31,8 @@ export class ProfileComponent implements OnInit {
 		firstName: this.firstname,
 		lastName: this.lastname
 	})
-	get self(): Observable<Account | null> {
-		return this.store$.select(Profiles.selectSelfProfile);
+	get self(): Observable<Account | null | undefined> {
+		return this.store$.select(Profiles.ProfileSelectors.selectSelfProfile);
 	}
 
 

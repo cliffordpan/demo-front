@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Account } from './models';
+import { Account, BaseAccount } from './models';
 import { Confirm } from './comfirm.decorator';
 
 
@@ -13,6 +13,10 @@ export class AccountService {
 	private http$ = inject(HttpClient);
 
 	constructor() { }
+
+	listAllBaseInfo(): Observable<BaseAccount[]> {
+		return this.http$.get<BaseAccount[]>('/api/accounts');
+	}
 
 	getSelf(): Observable<Account> {
 		return this.http$.get<Account>('/api/self');

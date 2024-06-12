@@ -1,0 +1,15 @@
+<table cdk-table [dataSource]="tickets" recycleRows>
+  <ng-container cdkColumnDef="title">
+    <th cdk-header-cell *cdkHeaderCellDef>Title</th>
+    <td cdk-cell *cdkCellDef="let element">{{ element.title }}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container cdkColumnDef="createdDate">
+    <th cdk-header-cell *cdkHeaderCellDef>Created Date</th>
+    <td cdk-cell *cdkCellDef="let element">{{ element.createdDate }}</td>
+  </ng-container>
+
+  <tr cdk-header-row *cdkHeaderRowDef="['title', 'createdDate']"></tr>
+  <tr cdk-row *cdkRowDef="let row; columns: ['title', 'createdDate']"></tr>
+</table>

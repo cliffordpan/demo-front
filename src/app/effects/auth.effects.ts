@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, OnInitEffects, createEffect, ofType } from '@ngrx/effects';
 import { AuthService, TokenBundle } from '../auth.service';
-import { Auths, Profiles } from '../reducers'
-import { catchError, concatMap, distinctUntilChanged, iif, interval, map, mergeMap, of, switchMap, takeUntil, takeWhile, tap, zipWith } from 'rxjs';
+import { Accounts, Auths, Profiles } from '../reducers'
+import { catchError, concatMap, distinctUntilChanged, iif, interval, map, mergeMap, of, pipe, switchMap, takeUntil, takeWhile, tap, zipWith } from 'rxjs';
 import { Router } from '@angular/router';
 import { Action, createAction } from '@ngrx/store';
 import { TokenService } from '../../token.service';
@@ -60,6 +60,11 @@ export class AuthEffects implements OnInitEffects {
 		}),
 		map(({ email }) => Profiles.ProfileActions.getSelf({ email }))
 	));
+
+	loggedInLoadAccounts = createEffect(() => this.actions$.pipe(
+		ofType(Auths.AuthActions.loggedIn),
+		map(() => Accounts.BaseAccountActions.loadAccounts())
+	))
 
 	loggedOut = createEffect(() => this.actions$.pipe(
 		ofType(Auths.AuthActions.loggedOut),

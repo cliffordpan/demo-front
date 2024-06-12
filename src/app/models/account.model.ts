@@ -1,11 +1,14 @@
 import { DomainEntity } from "./page.model"
 
-export interface Account extends DomainEntity {
+export interface BaseAccount extends DomainEntity {
 	type: AccountType
-	email: string
-	password?: string
 	firstName?: string
 	lastName?: string
+}
+
+export interface Account extends BaseAccount {
+	email: string
+	password?: string
 	nickName?: string
 	billingAddress?: Address
 	shippingAddress?: Address

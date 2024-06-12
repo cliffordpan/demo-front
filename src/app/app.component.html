@@ -13,11 +13,6 @@
     >
       <mat-icon>database</mat-icon>
     </button>
-    @if(self|async; as a) { @if(a.type != 'EMPLOYEE'){
-    <a mat-icon-button matTooltip="Shopping Cart" routerLinkActive="is-active">
-      <mat-icon [matBadge]="cartTotal | async">shopping_cart</mat-icon>
-    </a>
-    } }
     <a
       mat-icon-button
       routerLink="/products"
@@ -27,6 +22,15 @@
       <mat-icon>videogame_asset</mat-icon>
     </a>
     @if(isAuth|async) {
+    <a
+      mat-icon-button
+      routerLink="/tickets"
+      routerLinkActive="is-active"
+      matTooltip="Tickets"
+    >
+      <mat-icon>support_agent</mat-icon>
+    </a>
+
     <a
       mat-icon-button
       routerLink="/profile"
@@ -50,7 +54,7 @@
 </main>
 <footer class="footer t2nd">
   <mat-toolbar color="primary">
-    @if(self|async; as a) { @if(a.type != 'EMPLOYEE'){
+    @if(self|async; as a){ @if(a.type != 'EMPLOYEE'){
     <button
       style="margin-left: auto"
       mat-icon-button
@@ -59,8 +63,16 @@
     >
       <mat-icon>help</mat-icon>
     </button>
-    }}</mat-toolbar
-  >
+    } } @else {
+    <button
+      style="margin-left: auto"
+      mat-icon-button
+      matTooltip="Send ticket"
+      (click)="sendTicket()"
+    >
+      <mat-icon>help</mat-icon></button
+    >}
+  </mat-toolbar>
 </footer>
 <footer class="footer-base t2nd">
   <mat-toolbar color="primary"> </mat-toolbar>

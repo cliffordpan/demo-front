@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, EffectNotification, OnRunEffects, createEffect, ofType } from '@ngrx/effects';
 import { Observable, catchError, exhaustMap, map, of, switchMap, takeUntil, tap, throwIfEmpty, zip } from 'rxjs';
-import { AppState, Auths, Profiles } from '../reducers';
+import { Accounts, AppState, Auths, Profiles } from '../reducers';
 import { AccountService } from '../account.service';
 import { Account } from '../models';
 import { Store } from '@ngrx/store';
@@ -20,10 +20,16 @@ export class AccountEffects implements OnRunEffects {
 
 	updateProfile = createEffect(() => this.actions$.pipe(
 		ofType(Profiles.ProfileActions.updateSelf),
-		switchMap(({ profile }) => zip(this.store$.select<Account | null>(Profiles.selectSelfProfile), of(profile))),
+		switchMap(({ profile }) => zip(this.store$.select<Account | null | undefined>(Profiles.ProfileSelectors.selectSelfProfile), of(profile))),
 		map(([p1, p2]) => ({ ...p1, ...p2 })),
 		switchMap(profile => this.account$.updateAccount(profile)),
 		map(profile => Profiles.ProfileActions.gotSelf({ profile }))
+	));
+
+	loadAccounts = createEffect(() => this.actions$.pipe(
+		ofType(Accounts.BaseAccountActions.loadAccounts),
+		switchMap(() => this.account$.listAllBaseInfo()),
+		map((accounts) => Accounts.BaseAccountActions.loadedAccounts({ accounts }))
 	));
 
 	constructor(private actions$: Actions, private account$: AccountService, private store$: Store<AppState>) { }

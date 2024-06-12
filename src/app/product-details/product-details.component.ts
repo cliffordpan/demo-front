@@ -19,7 +19,7 @@ export class ProductDetailsComponent {
 	private store$ = inject(Store);
 
 	get self() {
-		return this.store$.select<Account | null>(Profiles.selectSelfProfile);
+		return this.store$.select<Account | null | undefined>(Profiles.ProfileSelectors.selectSelfProfile);
 	}
 
 	get product(): Observable<Product> {

@@ -1,15 +1,16 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Auths, Profiles, Systems } from './reducers';
-import { Subscription, map } from 'rxjs';
+import { Subscription, firstValueFrom, map } from 'rxjs';
 import { Account, AccountType } from './models';
 import { ShoppingCartService } from './shopping-cart.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from './login/login.component';
+import { NewTicketComponent } from './new-ticket/new-ticket.component';
 
 @Component({
 	selector: 'hc-root',
@@ -27,12 +28,18 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	private _subscription?: Subscription
 
+	private _ticketDialogOpened = false;
+
+	get isTicketOpened() {
+		return this._ticketDialogOpened;
+	}
+
 	get isAuth() {
 		return this.store$.select<boolean>(Auths.selectIsAuth);
 	}
 
 	get self() {
-		return this.store$.select<Account | null>(Profiles.selectSelfProfile);
+		return this.store$.select<Account | null | undefined>(Profiles.ProfileSelectors.selectSelfProfile);
 	}
 
 	get cartTotal() {
@@ -68,11 +75,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.titleService.setTitle(this.title);
-		// this._subscription = this.isAuth.subscribe(b => {
-		// 	if (!b) {
-		// 		this.router.navigateByUrl('/home');
-		// 	}
-		// })
 	}
 
 	ngOnDestroy(): void {
@@ -93,7 +95,28 @@ export class AppComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	sendTicket() {
+	async sendTicket() {
+		const isAuth = await firstValueFrom(this.isAuth);
+		if (!isAuth) {
+			const rs = await firstValueFrom(this.dialog.open<LoginComponent, any, boolean>(LoginComponent).afterClosed());
+			if (!rs) return;
+		}
+		const self = await firstValueFrom(this.self);
+		if (self?.type != AccountType.EMPLOYEE) {
+			if (!this._ticketDialogOpened) {
+				this.openTicket();
+			}
+		}
+	}
 
+	private openTicket(): void {
+		const ref = this.dialog.open<NewTicketComponent>(NewTicketComponent, { hasBackdrop: false });
+		ref.afterOpened().subscribe({
+			complete: () => this._ticketDialogOpened = true
+		});
+
+		ref.afterClosed().subscribe({
+			complete: () => this._ticketDialogOpened = false
+		})
 	}
 }

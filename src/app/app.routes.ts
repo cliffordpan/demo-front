@@ -5,6 +5,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { productDetailsResolver } from './product-details.resolver';
 import { ProfileComponent } from './profile/profile.component';
 import { authGuard } from './auth.guard';
+import { TicketsComponent } from './tickets/tickets.component';
 
 export const routes: Routes = [
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,6 +19,17 @@ export const routes: Routes = [
 					product: productDetailsResolver
 				}
 			}
+		]
+	},
+	{
+		path: 'tickets',
+		children: [
+			{ path: '', component: TicketsComponent, canActivate: [authGuard] },
+			// {
+			// 	path: ':id', component: ProductDetailsComponent, resolve: {
+			// 		product: productDetailsResolver
+			// 	}
+			// }
 		]
 	},
 	{ path: 'profile', component: ProfileComponent, canActivate: [authGuard] }
